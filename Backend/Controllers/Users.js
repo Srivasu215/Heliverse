@@ -66,4 +66,16 @@ let deleteManyFunc = async (req, res) => {
 
 };
 
-module.exports = { insertOneFunc, insertManyFunc, findAllFunc, findOneFunc, deleteOneFunc, deleteManyFunc };
+let PutOneFunc = async (req, res) => {
+    let LocalId = req.params.Id;
+    let LocalBody = req.body;
+    try {
+        const newUser = await User.findByIdAndUpdate(LocalId,LocalBody);
+        res.status(201).json(newUser);
+    } catch (err) {
+        res.status(400).json({ message: err.message });
+    }
+
+};
+
+module.exports = { insertOneFunc, insertManyFunc, findAllFunc, findOneFunc, deleteOneFunc, deleteManyFunc,PutOneFunc };

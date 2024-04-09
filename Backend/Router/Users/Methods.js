@@ -9,6 +9,8 @@ router.post('/', controller.insertOneFunc);
 router.post('/Many', controller.insertManyFunc);
 router.post('/deleteMany/:Id', controller.deleteManyFunc);
 
+router.put('/:Id', controller.PutOneFunc);
+
 router.delete('/:Id', controller.deleteOneFunc);
 
 

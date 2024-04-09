@@ -1,0 +1,10 @@
+PUT http://localhost:8000/Api/User/660ebd3b349d5deaeabdf902
+content-type: application/json
+
+{
+"firstName":"Ramala",
+"lastName":"S",
+"email":"ram.215@gmail.com",
+"password":"raj123",
+"gender":"male"
+}

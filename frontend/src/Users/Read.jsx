@@ -39,6 +39,7 @@ const Read = () => {
                             <th style={{ border: '1px solid black' }}>password</th>
                             <th style={{ border: '1px solid black' }}>gender</th>
                             <th style={{ border: '1px solid black' }}>Update</th>
+                            <th style={{ border: '1px solid black' }}>Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -49,10 +50,18 @@ const Read = () => {
                                 <td style={{ border: '1px solid black' }}>{item.email}</td>
                                 <td style={{ border: '1px solid black' }}>{item.password}</td>
                                 <td style={{ border: '1px solid black' }}>{item.gender}</td>
-                                <td><div className="col-md-6">
-                                    <button className="btn btn-warning" type="button">Update</button>
+                                <td>
+                                    <div className="col-md-6">
+                                        <Link to={`/Update?id=${item._id}`}> <button className="btn btn-warning" type="button">Update</button></Link>
 
-                                </div></td>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div className="col-md-6">
+                                        <button className="btn btn-danger" type="button">Delete</button>
+
+                                    </div>
+                                </td>
                             </tr>
                         ))}
                     </tbody>
