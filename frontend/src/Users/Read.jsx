@@ -13,13 +13,21 @@ const Read = () => {
                 }
                 const LocalReturnData = await response.json();
                 setFetchData(LocalReturnData);
-                console.log("LocalReturnData::", LocalReturnData);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
         handleSubmit();
     }, []);
+
+    const handleDelete = async (id) => {
+        const localfetch = await fetch(`http://localhost:8000/Api/User/${id}`, {
+            method: 'DELETE'
+        });
+        if (localfetch.status === 201) {
+            window.location.reload();
+        };
+    };
 
     return (
         <div className="card">
@@ -58,8 +66,7 @@ const Read = () => {
                                 </td>
                                 <td>
                                     <div className="col-md-6">
-                                        <button className="btn btn-danger" type="button">Delete</button>
-
+                                        <button className="btn btn-danger" onClick={() => handleDelete(item._id)} type="button">Delete</button>
                                     </div>
                                 </td>
                             </tr>
