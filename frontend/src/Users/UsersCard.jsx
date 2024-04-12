@@ -2,60 +2,71 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const UsersCard = () => {
-    const [FetchData, setFetchData] = useState([]);
+    const [userData, setUserData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const usersPerPage = 20; // Number of users per page
 
     useEffect(() => {
-        const handleSubmit = async () => {
+        const fetchData = async () => {
             try {
                 const response = await fetch('http://localhost:8000/Api/User');
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
-                const LocalReturnData = await response.json();
-                setFetchData(LocalReturnData);
+                const data = await response.json();
+                setUserData(data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
         };
-        handleSubmit();
+        fetchData();
     }, []);
 
-    const handleDelete = async (id) => {
-        const localfetch = await fetch(`http://localhost:8000/Api/User/${id}`, {
-            method: 'DELETE'
-        });
-        if (localfetch.status === 201) {
-            window.location.reload();
-        };
-    };
+    // Logic to get current users
+    const indexOfLastUser = currentPage * usersPerPage;
+    const indexOfFirstUser = indexOfLastUser - usersPerPage;
+    const currentUsers = userData.slice(indexOfFirstUser, indexOfLastUser);
+
+    // Logic for pagination
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(userData.length / usersPerPage); i++) {
+        pageNumbers.push(i);
+    }
+
+    const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
     return (
         <div className="card">
-
             <div className="card-deader">
                 <Link to="/insert" className="btn btn-primary">Add</Link>
-
             </div>
             <div className="card-body ">
-
-
                 <div className="row g-4">
-                    {FetchData.map((item) => (
-                        <div class="col-md-3">
+                    {currentUsers.map((user, index) => (
+                        <div key={index} className="col-md-3">
                             <div className="card border-primary" style={{ width: "18rem" }}>
                                 <div className="card-body">
-                                    <p>First Name: <b>{item.firstName}</b></p>
-                                    <p>lastName: {item.lastName}</p>
-                                    <p>email: {item.email}</p>
-                                    <p>password: {item.password}</p>
-                                    <p>gender: {item.gender}</p>
+                                    <p>First Name: <b>{user.firstName}</b></p>
+                                    <p>Last Name: {user.lastName}</p>
+                                    <p>Email: {user.email}</p>
+                                    <p>Password: {user.password}</p>
+                                    <p>Gender: {user.gender}</p>
                                 </div>
                             </div>
                         </div>
                     ))}
                 </div>
-
-
+                <nav>
+                    <ul className="pagination justify-content-center">
+                        {pageNumbers.map(number => (
+                            <li key={number} className="page-item">
+                                <button onClick={() => paginate(number)} className="page-link">
+                                    {number}
+                                </button>
+                            </li>
+                        ))}
+                    </ul>
+                </nav>
             </div>
         </div>
     );
