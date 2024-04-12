@@ -41,6 +41,7 @@ const Read = () => {
                 <table className="table container" style={{ borderCollapse: 'collapse', border: '1px solid black' }}>
                     <thead>
                         <tr>
+                            <th style={{ border: '1px solid black' }}>S.no</th>
                             <th style={{ border: '1px solid black' }}>firstName</th>
                             <th style={{ border: '1px solid black' }}>lastName</th>
                             <th style={{ border: '1px solid black' }}>email</th>
@@ -51,8 +52,9 @@ const Read = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {FetchData.map((item) => (
+                        {FetchData.map((item, index) => (
                             <tr key={item._id}>
+                                <td style={{ border: '1px solid black' }}>{index + 1}</td>
                                 <td style={{ border: '1px solid black' }}>{item.firstName}</td>
                                 <td style={{ border: '1px solid black' }}>{item.lastName}</td>
                                 <td style={{ border: '1px solid black' }}>{item.email}</td>
