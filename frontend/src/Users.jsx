@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Insert from './Users/Insert'
 import Update from './Users/Update'
 import UsersCard from './Users/UsersCard'
+import ShowTable from './Users/ShowTable'
 
 const Users = () => {
     return (
@@ -14,6 +15,7 @@ const Users = () => {
                 <Route exact path="/insert" element={<Insert />} />
                 <Route exact path="/Update" element={<Update />} />
                 <Route exact path="/Cards" element={<UsersCard />} />
+                <Route exact path="/ShowTable" element={<ShowTable />} />
 
                 {/* Add other routes here if needed */}
             </Routes>
