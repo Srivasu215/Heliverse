@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import Delete from './Users/Delete'
 import Insert from './Users/Insert'
 import Update from './Users/Update'
+import UsersCard from './Users/UsersCard'
 
 const Users = () => {
     return (
@@ -12,6 +13,7 @@ const Users = () => {
                 <Route path="/" element={<Read />} />
                 <Route exact path="/insert" element={<Insert />} />
                 <Route exact path="/Update" element={<Update />} />
+                <Route exact path="/Cards" element={<UsersCard />} />
 
                 {/* Add other routes here if needed */}
             </Routes>
