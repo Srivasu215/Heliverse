@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 const UsersCard = () => {
     const [userData, setUserData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState("");
     const usersPerPage = 20; // Number of users per page
 
     useEffect(() => {
@@ -25,22 +26,42 @@ const UsersCard = () => {
     // Logic to get current users
     const indexOfLastUser = currentPage * usersPerPage;
     const indexOfFirstUser = indexOfLastUser - usersPerPage;
-    const currentUsers = userData.slice(indexOfFirstUser, indexOfLastUser);
+    const currentUsers = userData
+        .filter(user => {
+            const fullName = `${user.firstName} ${user.lastName}`.toLowerCase();
+            return fullName.includes(searchTerm.toLowerCase());
+        })
+        .slice(indexOfFirstUser, indexOfLastUser);
 
     // Logic for pagination
     const pageNumbers = [];
-    for (let i = 1; i <= Math.ceil(userData.length / usersPerPage); i++) {
+    for (let i = 1; i <= Math.ceil(currentUsers.length / usersPerPage); i++) {
         pageNumbers.push(i);
     }
 
     const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
+    const handleSearchChange = (event) => {
+        setSearchTerm(event.target.value);
+        setCurrentPage(1); // Reset current page when search term changes
+    };
+
     return (
         <div className="card">
-            <div className="card-deader">
-                <Link to="/insert" className="btn btn-primary">Add</Link>
+            <div className="card-header">
+                <div className="d-flex justify-content-between align-items-center">
+                    <h5>Users</h5>
+                    <input
+                        type="text"
+                        className="form-control"
+                        placeholder="Search by name"
+                        value={searchTerm}
+                        onChange={handleSearchChange}
+                    />
+                </div>
+                <Link to="/insert" className="btn btn-primary mt-2">Add</Link>
             </div>
-            <div className="card-body ">
+            <div className="card-body">
                 <div className="row g-4">
                     {currentUsers.map((user, index) => (
                         <div key={index} className="col-md-3">
